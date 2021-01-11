@@ -526,6 +526,13 @@ _C.AVA.GROUNDTRUTH_FILE = "ava_val_v2.2.csv"
 # Backend to process image, includes `pytorch` and `cv2`.
 _C.AVA.IMG_PROC_BACKEND = "cv2"
 
+# AVA valid frames range
+_C.AVA.LOWEST_VALID_FRAME = 0
+_C.AVA.HIGHEST_VALID_FRAME = 152476
+
+# AVA videos framerate
+_C.AVA.FPS = 30
+
 # ---------------------------------------------------------------------------- #
 # Multigrid training options
 # See https://arxiv.org/abs/1912.00998 for details about multigrid training.
