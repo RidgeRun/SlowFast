@@ -8,9 +8,6 @@ from iopath.common.file_io import g_pathmgr
 
 logger = logging.getLogger(__name__)
 
-FPS = 30
-AVA_VALID_FRAMES = range(902, 1799)
-
 
 def load_image_lists(cfg, is_train):
     """
@@ -98,6 +95,7 @@ def load_boxes_and_labels(cfg, mode):
         4 if mode == "val" and not cfg.AVA.FULL_TEST_ON_VAL else 1
     )
     all_boxes, count, unique_box_count = parse_bboxes_file(
+        cfg,
         ann_filenames=ann_filenames,
         ann_is_gt_box=ann_is_gt_box,
         detect_thresh=detect_thresh,
@@ -113,7 +111,7 @@ def load_boxes_and_labels(cfg, mode):
     return all_boxes
 
 
-def get_keyframe_data(boxes_and_labels):
+def get_keyframe_data(cfg, boxes_and_labels):
     """
     Getting keyframe indices, boxes and labels in the dataset.
 
@@ -133,7 +131,7 @@ def get_keyframe_data(boxes_and_labels):
         0: 900
         30: 901
         """
-        return (sec - 900) * FPS
+        return (sec - cfg.AVA.LOWEST_VALID_FRAME) * cfg.AVA.FPS
 
     keyframe_indices = []
     keyframe_boxes_and_labels = []
@@ -142,7 +140,8 @@ def get_keyframe_data(boxes_and_labels):
         sec_idx = 0
         keyframe_boxes_and_labels.append([])
         for sec in boxes_and_labels[video_idx].keys():
-            if sec not in AVA_VALID_FRAMES:
+            if sec not in range(cfg.AVA.LOWEST_VALID_FRAME,
+                                cfg.AVA.HIGHEST_VALID_FRAME):
                 continue
 
             if len(boxes_and_labels[video_idx][sec]) > 0:
@@ -178,7 +177,7 @@ def get_num_boxes_used(keyframe_indices, keyframe_boxes_and_labels):
     return count
 
 
-def parse_bboxes_file(
+def parse_bboxes_file(cfg,
     ann_filenames, ann_is_gt_box, detect_thresh, boxes_sample_rate=1
 ):
     """
@@ -215,7 +214,8 @@ def parse_bboxes_file(
 
                 if video_name not in all_boxes:
                     all_boxes[video_name] = {}
-                    for sec in AVA_VALID_FRAMES:
+                    for sec in range(cfg.AVA.LOWEST_VALID_FRAME,
+                                     cfg.AVA.HIGHEST_VALID_FRAME):
                         all_boxes[video_name][sec] = {}
 
                 if box_key not in all_boxes[video_name][frame_sec]:
