@@ -443,6 +443,7 @@ def load_boxes_labels(cfg, video_name, fps, img_width, img_height):
     gt_boxes_path = cfg.DEMO.GT_BOXES
 
     preds_boxes, _, _ = parse_bboxes_file(
+        cfg,
         ann_filenames=[preds_boxes_path],
         ann_is_gt_box=[False],
         detect_thresh=cfg.AVA.DETECTION_SCORE_THRESH,
@@ -453,6 +454,7 @@ def load_boxes_labels(cfg, video_name, fps, img_width, img_height):
         gt_boxes = None
     else:
         gt_boxes, _, _ = parse_bboxes_file(
+            cfg,
             ann_filenames=[gt_boxes_path],
             ann_is_gt_box=[True],
             detect_thresh=cfg.AVA.DETECTION_SCORE_THRESH,
