@@ -406,7 +406,7 @@ def load_boxes_labels(cfg, video_name, fps, img_width, img_height):
     starting_second = cfg.DEMO.STARTING_SECOND
 
     def sec_to_frameidx(sec):
-        return (sec - starting_second) * fps
+        return int((sec - starting_second) * fps)
 
     def process_bboxes_dict(dictionary):
         """
