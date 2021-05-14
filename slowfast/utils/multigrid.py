@@ -193,6 +193,7 @@ class MultigridSchedule(object):
         # saving as the rest of the training.
         ft_epochs = final_step_epochs / iter_saving * avg_bs[-1]
 
+        # FIXME: multigrid crashes if only long cycle
         schedule.append((step_index + 1, all_shapes[-1][2], ft_epochs))
 
         # Obtrain final schedule given desired cfg.MULTIGRID.EPOCH_FACTOR.
