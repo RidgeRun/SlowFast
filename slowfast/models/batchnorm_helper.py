@@ -34,7 +34,7 @@ def get_norm(cfg):
         )
 
 
-class SubBatchNorm3d(nn.Module):
+class SubBatchNorm3d(nn.BatchNorm3d):
     """
     The standard BN layer computes stats across all examples in a GPU. In some
     cases it is desirable to compute stats across only a subset of examples
@@ -51,7 +51,7 @@ class SubBatchNorm3d(nn.Module):
             num_splits (int): number of splits.
             args (list): other arguments.
         """
-        super(SubBatchNorm3d, self).__init__()
+        super(SubBatchNorm3d, self).__init__(**args)
         self.num_splits = num_splits
         num_features = args["num_features"]
         # Keep only one set of weight and bias.
