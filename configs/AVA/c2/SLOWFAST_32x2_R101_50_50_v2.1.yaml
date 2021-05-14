@@ -25,6 +25,8 @@ AVA:
   LABEL_MAP_FILE: ava_action_list_v2.1_for_activitynet_2018.pbtxt
   EXCLUSION_FILE: ava_val_excluded_timestamps_v2.1.csv
   GROUNDTRUTH_FILE: ava_val_v2.1.csv
+  LOWEST_VALID_FRAME: 0
+  HIGHEST_VALID_FRAME: 152476
 SLOWFAST:
   ALPHA: 4
   BETA_INV: 8
