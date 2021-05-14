@@ -6,6 +6,7 @@
 import numpy as np
 
 import slowfast.utils.logging as logging
+from slowfast.utils.distributed import get_local_size
 
 logger = logging.get_logger(__name__)
 
@@ -89,7 +90,12 @@ class MultigridSchedule(object):
 
             if bs_factor < 1:
                 cfg.BN.NORM_TYPE = "sync_batchnorm"
-                cfg.BN.NUM_SYNC_DEVICES = int(1.0 / bs_factor)
+
+                num_sync_devices = int(1.0 / bs_factor)
+                if get_local_size() % num_sync_devices == 0:
+                    # Checks if the new parameters is compatible with the hardware settings
+                    cfg.BN.NUM_SYNC_DEVICES = num_sync_devices 
+
             elif bs_factor > 1:
                 cfg.BN.NORM_TYPE = "sub_batchnorm"
                 cfg.BN.NUM_SPLITS = int(bs_factor)
