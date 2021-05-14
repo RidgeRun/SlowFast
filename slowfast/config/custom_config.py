@@ -10,3 +10,7 @@ def add_custom_config(_C):
     _C.TL.METHOD = "ft"
     _C.TL.LR_MULTIPLIER = 1e-1
     _C.TL.EXCLUDE_FREEZE = []
+
+    # Add config for VM management
+    _C.VM = CfgNode()
+    _C.VM.AUTO_SHUTDOWN = False
