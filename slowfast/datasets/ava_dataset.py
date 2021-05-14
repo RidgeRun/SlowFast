@@ -75,7 +75,7 @@ class Ava(torch.utils.data.Dataset):
         (
             self._keyframe_indices,
             self._keyframe_boxes_and_labels,
-        ) = ava_helper.get_keyframe_data(self.cfg, boxes_and_labels)
+        ) = ava_helper.get_keyframe_data(cfg, boxes_and_labels)
 
         # Calculate the number of used boxes.
         self._num_boxes_used = ava_helper.get_num_boxes_used(
