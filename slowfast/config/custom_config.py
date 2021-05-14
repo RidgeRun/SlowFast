@@ -10,3 +10,4 @@ def add_custom_config(_C):
     _C.TL.METHOD = "ft"
     _C.TL.LR_MULTIPLIER = 1e-1
     _C.TL.FORCE_OLD_HEAD = False
+    _C.TL.EXCLUDE_FREEZE = []
